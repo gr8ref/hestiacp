@@ -13,7 +13,7 @@ $LANG['bs'] = array(
     'Server'  => 'Server',
     'Services'  => 'Servisi',
     'Firewall' => 'Firewall',
-    'Updates'  => 'Novo',
+    'Updates'  => 'Ažuriranje',
     'Log in'  => 'Ulaz',
     'Log out'  => 'Izlaz',
 
@@ -37,7 +37,7 @@ $LANG['bs'] = array(
     'SERVER'  => 'SERVER',
     'MEMORY'  => 'MEMORIJA',
     'DISK'  => 'DISK',
-    'NETWORK'  => 'MREŠA',
+    'NETWORK'  => 'MREŽA',
     'Web Log Manager'  => 'Web Log Manager',
 
     'no notifications'  => 'no notifications',
