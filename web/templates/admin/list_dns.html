@@ -66,12 +66,14 @@
           ++$i;
           if ($data[$key]['SUSPENDED'] == 'yes') {
             $status = 'suspended';
-            $spnd_action = 'unsuspend' ;
-            $spnd_confirmation = 'UNSUSPEND_DOMAIN_CONFIRMATION' ;
+            $spnd_action = 'unsuspend';
+            $spnd_icon = 'fa-play';
+            $spnd_confirmation = 'UNSUSPEND_DOMAIN_CONFIRMATION';
           } else {
             $status = 'active';
-            $spnd_action = 'suspend' ;
-            $spnd_confirmation = 'SUSPEND_DOMAIN_CONFIRMATION' ;
+            $spnd_action = 'suspend';
+            $spnd_icon = 'fa-pause';
+            $spnd_confirmation = 'SUSPEND_DOMAIN_CONFIRMATION';
           }
       ?>
 
@@ -82,7 +84,10 @@ sort-expire="<?=strtotime($data[$key]['EXP'])?>" sort-records="<?=(int)$data[$ke
               <div class="clearfix l-unit__stat-col--left super-compact">
                 <input id="check<?php echo $i ?>" class="ch-toggle" type="checkbox" name="domain[]" value="<?php echo $key ?>">
               </div>
-              <div class="clearfix l-unit__stat-col--left wide-3"><b><a href="/list/dns/?domain=<?=$key?>&token=<?=$_SESSION['token']?>" title="<?=__('DNS records')?>"><?=$key?></a></b></div>
+              <div class="clearfix l-unit__stat-col--left wide-3">
+                <b><a href="/list/dns/?domain=<?=$key?>&token=<?=$_SESSION['token']?>" title="<?=__('DNS records')?>"><?=$key?></a></b>
+                <?=empty($data[$key]['SRC'])? '' : '<br/>⇢ <span style="font-size:11px;">' . htmlspecialchars($data[$key]['SRC'], ENT_QUOTES) . '</span>'; ?>
+              </div>
               <!-- START QUICK ACTION TOOLBAR AREA -->
               <div class="clearfix l-unit__stat-col--left text-right">
                   <div class="l-unit-toolbar__col l-unit-toolbar__col--right noselect">
@@ -94,7 +99,7 @@ sort-expire="<?=strtotime($data[$key]['EXP'])?>" sort-records="<?=(int)$data[$ke
 
                     <div class="actions-panel__col actions-panel__suspend shortcut-s" key-action="js">
                       <a id="<?=$spnd_action ?>_link_<?=$i?>" class="data-controls do_<?=$spnd_action?>" title="<?=__($spnd_action)?>">
-                        <i class="fas fa-pause status-icon highlight status-icon dim do_<?=$spnd_action?>"></i>
+                        <i class="fas <?=$spnd_icon?> status-icon highlight status-icon dim do_<?=$spnd_action?>"></i>
                         <input type="hidden" name="<?=$spnd_action?>_url" value="/<?=$spnd_action?>/dns/?domain=<?=$key?>&token=<?=$_SESSION['token']?>" />
                         <div id="<?=$spnd_action?>_dialog_<?=$i?>" class="confirmation-text-suspention hidden" title="<?=__('Confirmation')?>">
                           <p class="confirmation"><?=__($spnd_confirmation,$key)?></p>
@@ -114,7 +119,7 @@ sort-expire="<?=strtotime($data[$key]['EXP'])?>" sort-records="<?=(int)$data[$ke
                   </div>
                 </div>
               <!-- END QUICK ACTION TOOLBAR AREA -->
-              <div class="clearfix l-unit__stat-col--left text-center compact"><? if(!empty($data[$key]['SRC'])) echo "<span>⇢ ".$data[$key]['SRC']."</span>&nbsp; &nbsp; ";  if($data[$key]['RECORDS']) echo '<span>'.$data[$key]['RECORDS'].'</span>';?></div>
+              <div class="clearfix l-unit__stat-col--left text-center compact"><? if($data[$key]['RECORDS']) echo '<span>'.$data[$key]['RECORDS'].'</span>';?></div>
               <div class="clearfix l-unit__stat-col--left text-center"><b><?=$data[$key]['TPL']?></b></div>
               <div class="clearfix l-unit__stat-col--left text-center compact"><?=$data[$key]['TTL']?></div>
               <div class="clearfix l-unit__stat-col--left text-center wide"><?=$data[$key]['SOA']?></div>

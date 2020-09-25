@@ -3,9 +3,10 @@
         <div class="l-unit-toolbar__buttonstrip">
           <a class="ui-button cancel" id="btn-back" href="/list/server/"><i class="fas fa-arrow-left status-icon blue"></i> <?=__('Back')?></a>
           <a href="/add/firewall/" id="btn-create" class="ui-button cancel" title="<?=__('Add Rule')?>"><i class="fas fa-plus-circle status-icon green"></i> <?=__('Add Rule')?></a>
-          <? if(!empty($_SESSION['FIREWALL_EXTENSION'])) {
-            echo '<a class="ui-button cancel" href="/list/firewall/banlist/"><i class="fas fa-eye status-icon red"></i> '.__('list fail2ban').'</a>';
-          } ?>
+          <?php if(!empty($_SESSION['FIREWALL_EXTENSION'])): ?>
+            <a class="ui-button cancel" href="/list/firewall/banlist/"><i class="fas fa-eye status-icon red"></i> <?=__('list fail2ban')?></a>
+            <a class="ui-button cancel" href="/list/firewall/ipset/"><i class="fas fa-list status-icon blue"></i> <?=__('list ipset')?></a>
+          <?php endif; ?>
         </div>
         <ul class="context-menu sort-order animated fadeIn" style="display:none;">
           <li entity="sort-action"><span class="name"><?=__('Action')?> <i class="fas fa-sort-amount-down"></i></span><span class="up active"><i class="fas fa-sort-amount-up"></i></span></li>
@@ -35,11 +36,9 @@
           </table>
         </div>
       </div>
-      <!-- /.l-sort -->
     </div>
 
     <div class="l-separator"></div>
-    <!-- /.l-separator -->
 
     <div class="l-center units compact animated fadeIn">         
           <div class="header table-header">     
@@ -61,11 +60,13 @@
           ++$i;
           if ($data[$key]['SUSPENDED'] == 'yes') {
             $status = 'suspended';
-            $spnd_action = 'unsuspend' ;
+            $spnd_action = 'unsuspend';
+            $spnd_icon = 'fa-play';
             $spnd_confirmation = 'UNSUSPEND_RULE_CONFIRMATION' ;
           } else {
             $status = 'active';
-            $spnd_action = 'suspend' ;
+            $spnd_action = 'suspend';
+            $spnd_icon = 'fa-pause';
             $spnd_confirmation = 'SUSPEND_RULE_CONFIRMATION' ;
           }
       ?>
@@ -102,7 +103,7 @@ sort-ip="<?=str_replace('.', '', $data[$key]['IP'])?>" sort-comment="<?=$data[$k
                         
                   <div class="actions-panel__col actions-panel__suspend shortcut-s" key-action="js">
                     <a id="<?=$spnd_action ?>_link_<?=$i?>" class="data-controls do_<?=$spnd_action?>" title="<?=__($spnd_action)?>">
-                      <i class="fas fa-pause status-icon highlight status-icon dim do_<?=$spnd_action?>"></i>
+                      <i class="fas <?=$spnd_icon?> status-icon highlight status-icon dim do_<?=$spnd_action?>"></i>
                       <input type="hidden" name="<?=$spnd_action?>_url" value="/<?=$spnd_action?>/firewall/?rule=<?=$key?>&token=<?=$_SESSION['token']?>" />
                       <div id="<?=$spnd_action?>_dialog_<?=$i?>" class="confirmation-text-suspention hidden" title="<?=__('Confirmation')?>">
                         <p class="confirmation"><?=__($spnd_confirmation,$key)?></p>
@@ -123,7 +124,7 @@ sort-ip="<?=str_replace('.', '', $data[$key]['IP'])?>" sort-comment="<?=$data[$k
             </div>
             <!-- END QUICK ACTION TOOLBAR AREA -->
             <div class="clearfix l-unit__stat-col--left wide-1 text-center"><b><? if(!empty($data[$key]['COMMENT'])) echo '' . $data[$key]['COMMENT']; else echo "&nbsp;"; ?></b></div>
-            <div class="clearfix l-unit__stat-col--left text-center"><b><?=__($data[$key]['PROTOCOL'])?></b></div>
+            <div class="clearfix l-unit__stat-col--left text-center"><?=__($data[$key]['PROTOCOL'])?></div>
             <div class="clearfix l-unit__stat-col--left wide-3 text-center"><b><?=$data[$key]['PORT']?></b></div>
             <div class="clearfix l-unit__stat-col--left text-center"><?=$data[$key]['IP']?></div>
           </div>

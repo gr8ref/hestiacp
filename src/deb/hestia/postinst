@@ -19,7 +19,7 @@ upgrade_refresh_config
 new_version=$(dpkg -l | awk '$2=="hestia" { print $3 }')
 
 # phpMyAdmin
-pma_v='4.9.2'
+pma_v='5.0.2'
 
 ###############################################################
 #               Begin standard upgrade routines               #
@@ -29,17 +29,19 @@ pma_v='4.9.2'
 upgrade_init_backup
 
 # Set up console display and welcome message
-clear
 upgrade_welcome_message
 
 # Execute version-specific upgrade scripts
 upgrade_start_routine
 
+# Update PHP templates
+update_php_templates
+
 # Upgrade phpMyAdmin if applicable
 upgrade_phpmyadmin
 
 # Set new version number in hestia.conf
-upgrade_set_version
+upgrade_set_version $new_version
 
 # Perform account and domain rebuild to ensure configuration files are correct
 upgrade_rebuild_users

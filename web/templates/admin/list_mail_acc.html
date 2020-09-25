@@ -67,12 +67,14 @@
           ++$i;
           if ($data[$key]['SUSPENDED'] == 'yes') {
             $status = 'suspended';
-            $spnd_action = 'unsuspend' ;
-            $spnd_confirmation = 'UNSUSPEND_MAIL_ACCOUNT_CONFIRMATION' ;
+            $spnd_action = 'unsuspend';
+            $spnd_icon = 'fa-play';
+            $spnd_confirmation = 'UNSUSPEND_MAIL_ACCOUNT_CONFIRMATION';
           } else {
             $status = 'active';
             $spnd_action = 'suspend';
-            $spnd_confirmation = 'SUSPEND_MAIL_ACCOUNT_CONFIRMATION' ;
+            $spnd_icon = 'fa-pause';
+            $spnd_confirmation = 'SUSPEND_MAIL_ACCOUNT_CONFIRMATION';
           }
       ?>
 
@@ -91,12 +93,12 @@ sort-star="<? if($_SESSION['favourites']['MAIL_ACC'][$key."@".$_GET['domain']] =
               <div class="clearfix l-unit__stat-col--left text-right compact-4">
                 <div class="l-unit-toolbar__col l-unit-toolbar__col--right noselect">
                   <div class="actions-panel clearfix">
-                    <div class="actions-panel__col actions-panel__edit" key-action="href"><a href="http://webmail.<?=htmlspecialchars($_GET['domain'])?>/?_user=<?=$key?>@<?=htmlspecialchars($_GET['domain'])?>" target="_blank" title="<?=__('open webmail')?>"><i class="fas fa-envelope-open-text status-icon maroon status-icon dim"></i></a></div>
+                    <div class="actions-panel__col actions-panel__edit" key-action="href"><a href="http://mail.<?=htmlspecialchars($_GET['domain'])?>/?_user=<?=$key?>@<?=htmlspecialchars($_GET['domain'])?>" target="_blank" title="<?=__('open webmail')?>"><i class="fas fa-envelope-open-text status-icon maroon status-icon dim"></i></a></div>
                     <div class="actions-panel__col actions-panel__logs shortcut-enter" key-action="href"><a href="/edit/mail/?domain=<?=htmlspecialchars($_GET['domain'])?>&account=<?=$key?>&token=<?=$_SESSION['token']?>" title="<?=__('Editing Mail Account')?>"><i class="fas fa-pencil-alt status-icon orange status-icon dim"></i></a></div>
 
                     <div class="actions-panel__col actions-panel__suspend shortcut-s" key-action="js">
                       <a id="<?=$spnd_action ?>_link_<?=$i?>" class="data-controls do_<?=$spnd_action?>" title="<?=__($spnd_action)?>">
-                        <i class="fas fa-pause status-icon highlight status-icon dim do_<?=$spnd_action?>"></i>
+                        <i class="fas <?=$spnd_icon?> status-icon highlight status-icon dim do_<?=$spnd_action?>"></i>
                         <input type="hidden" name="<?=$spnd_action?>_url" value="/<?=$spnd_action?>/mail/?domain=<?=htmlspecialchars($_GET['domain'])?>&account=<?php echo $key ?>&token=<?=$_SESSION['token']?>" />
                         <div id="<?=$spnd_action?>_dialog_<?=$i?>" class="confirmation-text-suspention hidden" title="<?=__('Confirmation')?>">
                           <p class="confirmation"><?=__($spnd_confirmation,$key)?></p>
@@ -123,13 +125,13 @@ sort-star="<? if($_SESSION['favourites']['MAIL_ACC'][$key."@".$_GET['domain']] =
             <div class="clearfix l-unit__stat-col--left text-center"><b>
                       <? if($data[$key]['SUSPENDED'] == 'no'){ ?>
                           <? if($data[$key]['ALIAS'] == ''){ ?>
-                            0
+                            <i class="fas fa-minus-circle"></i>
                           <? } else {?>
                             <i class="fas fa-check-circle status-icon green"></i>
                           <? } ?>
                       <? } else {?>
                         <? if($data[$key]['ALIAS'] == ''){ ?>
-                          0
+                          <i class="fas fa-minus-circle"></i>
                         <? } else {?>
                           <i class="fas fa-check-circle"></i>
                         <? } ?>

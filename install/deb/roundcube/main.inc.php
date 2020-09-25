@@ -266,7 +266,7 @@ $rcmail_config['x_frame_options'] = 'sameorigin';
 // this key is used to encrypt the users imap password which is stored
 // in the session record (and the client cookie if remember password is enabled).
 // please provide a string of exactly 24 chars.
-$rcmail_config['des_key'] = 'vtIOjLZo9kffJoqzpSbm5r1r';
+$rcmail_config['des_key'] = '%des_key%';
 
 // Automatically add this domain to user names for login
 // Only for IMAP servers that require full e-mail addresses for login
@@ -377,7 +377,7 @@ $rcmail_config['email_dns_check'] = false;
 // ----------------------------------
 
 // List of active plugins (in plugins/ directory)
-$rcmail_config['plugins'] = array('password');
+$rcmail_config['plugins'] = array('password','newmail_notifier','zipdownload');
 
 // ----------------------------------
 // USER INTERFACE
@@ -715,11 +715,11 @@ $rcmail_config['prefer_html'] = true;
 // 0 - Never, always ask
 // 1 - Ask if sender is not in address book
 // 2 - Always show inline images
-$rcmail_config['show_images'] = 0;
+$rcmail_config['show_images'] = 1;
 
 // compose html formatted messages by default
 // 0 - never, 1 - always, 2 - on reply to HTML message only 
-$rcmail_config['htmleditor'] = 0;
+$rcmail_config['htmleditor'] = 1;
 
 // show pretty dates as standard
 $rcmail_config['prettydate'] = true;
